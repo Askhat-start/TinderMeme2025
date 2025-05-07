@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5" >
+    <div class="card shadow-sm p-4 border-0" >
+        <h2 class="text-center mb-4 font-weight-bold">Matched Users with YOU!</h2>
+
+        {% if matches %}
+            <div class="list-group">
+                {% for match in matches %}
+                    <div class="list-group-item list-group-item-action d-flex align-items-center">
+                        <img src="{% static 'images/userIcon.png' %}" alt="User Icon" class="rounded-circle mr-3" style="width: 50px; height: 50px;">
+                        <div>
+                            <h5 class="mb-1">{{ match.matched_with.username }}</h5>
+                            <p class="mb-0 text-muted">Common like count <strong>{{ match.similarity_score }}</strong></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center mt-3 mb-0" role="alert">
+                You have no matches with nobody yet!
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+
