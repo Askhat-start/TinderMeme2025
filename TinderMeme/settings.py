@@ -25,13 +25,9 @@ SECRET_KEY = 'django-insecure-&gba55+%a!nb5wyfx+syxamw31qjcx0x32i4z=82g9h#npsp8=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+import dj_database_url
 import os
 
-ALLOWED_HOSTS = ['TinderMeme.onrender.com']
-
-# STATIC
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
 
 # WhiteNoise (для отдачи статики)
 MIDDLEWARE = [
@@ -62,6 +58,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+ALLOWED_HOSTS = ['*']
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 
 ROOT_URLCONF = 'TinderMeme.urls'
 
@@ -139,3 +143,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DATABASES['default'] = dj_database_url.config(default='sqlite:///db.sqlite3')
